@@ -32,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
         star.setStarCount(5);
         star.setRating(3);
         star.setChange(true);
-        star.setStar(R.drawable.ic_ystar_t,R.drawable.ic_ystar_d);
+        star.setHalf(true);
+        star.setStar(R.drawable.ic_full,R.drawable.ic_empty);
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override

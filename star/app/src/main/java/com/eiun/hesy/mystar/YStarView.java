@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -25,11 +26,15 @@ public class YStarView extends View {
 
     private int starCount;  //星星个数
     private int rating;     //亮星星的个数，默认为0
+    private int ratingH;    //星星的余数，控制半星
     private boolean change;    //是否可以滑动
+    private boolean half;    //是否开启半星
     private int starSize;     //星星高度大小，星星一般正方形，宽度等于高度
     private Bitmap starT; //亮星星
     private Bitmap starF; //暗星星
+    private Bitmap starH; //暗星星
     private Drawable fillStar;    //亮星星设置图
+    private Drawable halfStar;    //半星星设置图
     private Drawable emptyStar;    //暗星星设置图
     private Paint mPaint;//画笔
 
@@ -61,6 +66,7 @@ public class YStarView extends View {
         //画图
         for (int i = 0; i < starCount; i++) {//画多少颗星星
             if (rating>i) canvas.drawBitmap(starT,starSize*i,0,mPaint);//画亮的星星
+            else if (half&&ratingH<40&&ratingH>5&&rating==i) canvas.drawBitmap(starH,starSize*i,0,mPaint);//画半的星星
             else canvas.drawBitmap(starF,starSize*i,0,mPaint);//画暗的的星星
         }
     }
@@ -75,26 +81,12 @@ public class YStarView extends View {
             int x = (int) event.getX();
             if (x < 0) x = 0;
             if (x > getMeasuredWidth()) x = getMeasuredWidth();
-            switch(event.getAction()) {
-                //滑动事件
-                case MotionEvent.ACTION_MOVE: {
-                    rating=x/starSize;
-                    invalidate();//重新绘制
-                    break;
-                }
-                //点击事件
-                case MotionEvent.ACTION_DOWN: {
-                    rating=x/starSize+1;
-                    invalidate();
-                    break;
-                }
-                case MotionEvent.ACTION_UP: {
-                    break;
-                }
-            }
+            rating=x/starSize;
+            ratingH=x%starSize;
+            if (ratingH>40) rating++;
+            invalidate();//重新绘制
             return true;
         }
-
         else return false;
     }
 
@@ -108,14 +100,15 @@ public class YStarView extends View {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);        // 打开抗锯齿
 
+        half = false;//默认关闭半星
         change =false;//默认关闭点击滑动
         rating = 0;//默认评分为0
         starCount = 5;//默认五颗星星
 
         //这两个自行改成自己的图标
-        fillStar =this.getResources().getDrawable(R.drawable.ic_ystar_t);//亮星星的图标
-        emptyStar =this.getResources().getDrawable(R.drawable.ic_ystar_d);//暗星星的图标
-
+        fillStar =this.getResources().getDrawable(R.drawable.ic_full);//亮星星的图标
+        emptyStar =this.getResources().getDrawable(R.drawable.ic_empty);//暗星星的图标
+        halfStar =this.getResources().getDrawable(R.drawable.ic_half);//半星星的图标
     }
 
 
@@ -132,6 +125,7 @@ public class YStarView extends View {
         //初始化图片
         starT = drawableToBitmap(fillStar,starSize);
         starF = drawableToBitmap(emptyStar,starSize);
+        starH = drawableToBitmap(halfStar,starSize);
     }
 
     /**
@@ -167,6 +161,12 @@ public class YStarView extends View {
      */
     public void setChange(boolean change){
         this.change=change;
+    }
+    /**
+     * 设置星星是否可以点击和滑动改变
+     */
+    public void setHalf(boolean half){
+        this.half=half;
     }
     /**
      * 设置星星的样式
