@@ -1,33 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:ratingbar="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context="com.eiun.hesy.mystar.MainActivity">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:text="~~~点我~~~"
         android:gravity="center"
-        android:id="@+id/textView" />
+        android:id="@+id/textView"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        ratingbar:layout_constraintBottom_toTopOf="@+id/star"
+        ratingbar:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="16dp"
+        tools:layout_constraintLeft_creator="1"
+        ratingbar:layout_constraintLeft_toLeftOf="parent"
+        ratingbar:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <com.eiun.hesy.mystar.YStarView
         android:id="@+id/star"
-        android:layout_width="200dp"
-        android:layout_height="180dp" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        ratingbar:layout_constraintBottom_toBottomOf="@+id/ratingBar"
+        android:layout_marginTop="76dp"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="57dp"
+        ratingbar:layout_constraintLeft_toLeftOf="@+id/textView"
+        ratingbar:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp" />
 
     <RatingBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ratingBar" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/ratingBar"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        ratingbar:layout_constraintBottom_toBottomOf="parent"
+        ratingbar:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="198dp"
+        ratingbar:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>
