@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(textView, star.getRating()+"颗星星", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(textView, star.getRating()+"颗星", Snackbar.LENGTH_SHORT).show();
             }
         });
     }
